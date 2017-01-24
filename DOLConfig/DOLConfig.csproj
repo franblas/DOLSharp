@@ -218,7 +218,6 @@
   <PropertyGroup>
     <PostBuildEvent Condition=" '$(OS)' != 'Unix' ">xcopy "$(ProjectDir)*.xml" "$(ProjectDir)..\$(ConfigurationName)\lib\config" /y /s /q /i
 </PostBuildEvent>
-    <PostBuildEvent Condition=" '$(OS)' == 'Unix' ">cd "$(ProjectDir)"; mkdir -p "$(ProjectDir)../`echo $(ConfigurationName) | tr '[:upper:]' '[:lower:]'`/lib/config"; find ./ -name "*.xml" | xargs -i -t cp --parents -f {} "$(ProjectDir)../`echo $(ConfigurationName) | tr '[:upper:]' '[:lower:]'`/lib/config/"
-</PostBuildEvent>
+    <PostBuildEvent Condition=" '$(OS)' == 'Unix' ">rsync -avz --include='*.xml' --include="*/" --exclude="*" "$(ProjectDir)" "$(ProjectDir)..\$(ConfigurationName)\lib\config"</PostBuildEvent>
   </PropertyGroup>
 </Project>

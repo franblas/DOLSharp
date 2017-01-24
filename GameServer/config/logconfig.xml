@@ -5,14 +5,14 @@
 	<!-- Setup the root category, add the appenders and set the default level -->
 	<root>
 		<level value="DEBUG" />
-		<appender-ref ref="ColoredConsoleAppender" />
+		<appender-ref ref="ConsoleAppender" />
 		<appender-ref ref="GameServerLogFile" />
 		<appender-ref ref="ErrorLogFile" />
 		<appender-ref ref="WarnLogFile" />
 	</root>
 
 	<!-- Define our console output -->
-	<appender name="ColoredConsoleAppender" type="log4net.Appender.ColoredConsoleAppender">
+	<appender name="ConsoleAppender" type="log4net.Appender.ConsoleAppender">
 		<mapping>
 			<level value="ERROR" />
 			<foreColor value="Red, HighIntensity" />

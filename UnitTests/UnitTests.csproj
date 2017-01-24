@@ -169,7 +169,11 @@
       xcopy "$(SolutionDir)\GameServerScripts\dbupdater\*.xml" "$(ProjectDir)\$(OutputPath)\..\scripts\dbupdater" /y /s /q /i
     </PostBuildEvent>
     <PostBuildEvent Condition=" '$(OS)' == 'Unix' ">
-      cd "$(SolutionDir)/GameServer/language/"; mkdir -p "$(ProjectDir)/$(OutputPath)/../languages/"; find ./ -name "*.txt" | xargs -i -t cp --parents -f {} "$(ProjectDir)/$(OutputPath)/../languages/"
-      cd "$(SolutionDir)/GameServerScripts/"; mkdir -p "$(ProjectDir)/$(OutputPath)/../scripts/"; find ./ -name "*.cs" | xargs -i -t cp --parents -f {} "$(ProjectDir)/$(OutputPath)/../scripts/"; find "./dbupdater" -name "*.xml" | xargs -i -t cp --parents -f {} "$(ProjectDir)/$(OutputPath)/../scripts"</PostBuildEvent>
+      rsync -avz "$(ProjectDir)..\packages\System.Data.SQLite.Core.1.0.101.0\build\net45\x86" "$(ProjectDir)\$(OutputPath)\x86";
+      rsync -avz "$(ProjectDir)..\packages\System.Data.SQLite.Core.1.0.101.0\build\net45\x64" "$(ProjectDir)\$(OutputPath)\x64";
+      rsync -avz --include='*.txt' --include="*/" --exclude="*" "$(SolutionDir)\GameServer\language\" "$(ProjectDir)\$(OutputPath)\..\languages";
+      rsync -avz --include='*.cs' --include="*/" --exclude="*" "$(SolutionDir)\GameServerScripts\" "$(ProjectDir)\$(OutputPath)\..\scripts";
+      rsync -avz --include='*.xml' --include="*/" --exclude="*" "$(SolutionDir)\GameServerScripts\dbupdater\" "$(ProjectDir)\$(OutputPath)\..\scripts\dbupdater";
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
